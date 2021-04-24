@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(~{::title})">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/my.css">
+    <title>分类管理</title>
+</head>
+<body>
+<nav class="ui inverted attached segment my_padding_tb_min">
+    <div class="ui container">
+        <div class="ui inverted menu stackable secondary">
+            <h2 class="ui green header item">管理后台</h2>
+            <a href="/admin/blog/blogList/1" class="m-item my_mobile item"><i class="home icon"></i>博客</a>
+            <a href="/admin/sort/blogsort/1" class="active m-item my_mobile item"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item my_mobile item"><i class="tags icon"></i>标签</a>
+            <div class="m-item my_mobile item right menu">
+                <div class="item ui dropdown">
+                    <div class="text">
+                        <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
+                        Heaven
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="/logout" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button my_icon my_mobile_show"><i class="sidebar icon"></i></a>
+</nav>
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a th:href="@{/admin/sort/sortadd}" href="#" class="item">新添</a>
+            <a th:href="@{/admin/sort/blogsort/1}" href="#" class="active item">列表</a>
+        </div>
+    </div>
+</div>
+<div class="my_container_small">
+    <div class="ui container">
+        <table class="ui center aligned celled table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>分类名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="info: ${sorts.list}">
+                <td th:text="${info.id}">1</td>
+                <td th:text="${info.name}">刻意学习</td>
+                <td>
+                    <a th:href="@{'/admin/sort/sortedit/'+${info.id}}" href="" class="ui mini teal button">编辑</a>
+                    <a th:href="@{'/admin/sort/deleteSort/'+${info.id}}" onclick="return confirm('确定要删除该分类吗？该操作不可逆')" href="#" class="ui mini red button">删除</a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui mini left floated pagination menu" th:unless="${sorts.isFirstPage} and ${sorts.isLastPage}">
+                        <a href="" th:href="@{'/admin/sort/blogsort/'+${sorts.pageNum+(-1)}}" class="item" th:unless="${sorts.isFirstPage}">上一页</a>
+                        <a href="" th:href="@{'/admin/sort/blogsort/'+${sorts.pageNum+1}}" class="item" th:unless="${sorts.isLastPage}">下一页</a>
+                    </div>
+                    <a th:href="@{/admin/sort/sortadd}" class="ui mini right floated green button">新增</a>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+<footer class="ui inverted segment vertical my_padding_tb_max">
+  <div class="ui center aligned container">
+    <div class="ui divided inverted stackable grid">
+      <div class="three wide column">
+        <div class="ui inverted link list">
+          <div class="item">
+            <img th:src="@{/images/my.jpg}" src="../../static/images/my.jpg" class="ui rounded image" style="width: 100px">
+          </div>
+        </div>
+      </div>
+      <div class="three wide column">
+        <h4 class="ui inverted header my_text_thin my_text_line my_text_spaced ">最新博客</h4>
+        <div class="ui inverted link list">
+          <a href="#" class="item">最新动态</a>
+          <a href="#" class="item"></a>
+          <a href="#" class="item"></a>
+          <a href="#" class="item"></a>
+        </div>
+      </div>
+      <div class="three wide column">
+        <h4 class="ui inverted header my_text_thin my_text_line my_text_spaced ">联系我</h4>
+        <div class="ui inverted link list">
+          <a href="#" class="item">邮箱:1593623458@qq.com</a>
+          <a href="#" class="item">QQ:1593623458</a>
+        </div>
+      </div>
+      <div class="seven wide column">
+        <h4 class="ui inverted header my_text_thin my_text_line my_text_spaced ">最新消息</h4>
+        <p class="my_text_thin my_text_line my_text_spaced my_opacity_min">这是我的个人博客，主要分享一下编程相关的内容</p>
+      </div>
+    </div>
+    <div class="ui inverted section divider"></div>
+    <p class="my_text_thin my_text_line my_text_spaced my_opacity_min"> Copyright [c] 2019-2021 By Heaven Allrights Reserved</p>
+  </div>
+</footer>
+</body>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script>
+  $('.menu.toggle').click(function (){
+    $('.m-item').toggleClass('my_mobile')
+  })
+  $('.ui.dropdown').dropdown({
+    on: 'hover'
+  });
+</script>
+</html>
